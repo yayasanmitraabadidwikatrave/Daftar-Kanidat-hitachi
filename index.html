@@ -19,6 +19,7 @@ button{border:0;border-radius:9px;padding:11px 16px;background:var(--blue);color
 .status{border-radius:12px;background:#f1f5fb;border:1px solid #cbd7e8;border-left:5px solid var(--blue);padding:16px;margin:14px 0}.status strong{color:var(--blue)}.member-note{display:none;border-radius:12px;background:#fff5f5;border:1px solid #f2b8c0;border-left:5px solid var(--red);padding:16px;margin:14px 0;font-weight:800;color:#9f1239;letter-spacing:.2px}
 .hidden{display:none!important}.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.metric{background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:12px}.metric small{display:block;color:var(--muted)}.metric b{font-size:16px}
 footer{max-width:1040px;margin:auto;padding:0 16px 28px;color:var(--muted);font-size:12px}
+.fee-note{display:none;margin:16px 0;padding:16px;border:1px solid #cbd8ef;border-left:5px solid #185adb;border-radius:12px;background:#f4f7fc}.fee-note h3{margin:0 0 10px;font-size:16px}.fee-note ul{padding-left:20px;margin:8px 0}.fee-note li{margin:7px 0}.fee-note .verify{font-size:12px;color:#596579;margin:12px 0 0}
 @media(max-width:700px){.grid{grid-template-columns:1fr}.candidate-list{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:17px}.summary{grid-template-columns:1fr}}
 @media(max-width:390px){.candidate-list{grid-template-columns:1fr}}
 </style>
@@ -44,7 +45,17 @@ footer{max-width:1040px;margin:auto;padding:0 16px 28px;color:var(--muted);font-
 </section>
 <section class="panel hidden" id="statusPanel">
 <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><h2 style="margin:0">Status Kandidat</h2><button class="secondary" onclick="logout()">Keluar</button></div>
-<div class="status"><strong>Dalam proses tes dan MCU.</strong><br>Silakan menunggu informasi berikutnya.</div><div class="member-note" id="khurniasariNote">UNTUK PENDAFTARAN PT YANG LAIN SILAHKAN CEK DI GRUB ATAU WEBSITE KAMI</div>
+<div class="status"><strong>Dalam proses tes dan MCU.</strong><br>Silakan menunggu informasi berikutnya.</div>
+<div class="member-note" id="khurniasariNote">UNTUK PENDAFTARAN PT YANG LAIN SILAHKAN CEK DI GRUB ATAU WEBSITE KAMI</div>
+<div class="fee-note" id="khurniasariFees">
+<h3>Informasi seragam, mes, dan administrasi</h3>
+<p><b>Seragam: Rp375.000</b> — keterangan yang disampaikan: 2 stel seragam dan 3 topi.</p>
+<p><b>Mes: Rp350.000</b> — fasilitas tempat tinggal selama 2 bulan bagi yang belum memiliki tempat.</p>
+<p><b>Administrasi: Rp3.500.000</b> — informasi yang disampaikan menyebutkan pembayaran saat tanda tangan kontrak bagi kandidat yang lolos.</p>
+<p><b>Ukuran seragam:</b> pilih ukuran baju, celana, dan sepatu pada formulir di bawah.</p>
+<p><b>Ketentuan pengunduran diri / tidak lolos:</b> informasi yang disampaikan menyebut potongan 50% jika mengundurkan diri dan dana hangus bagi kandidat yang tidak lolos karena kesalahan pribadi.</p>
+<p class="verify">Seluruh nominal dan ketentuan di atas merupakan informasi yang diberikan pengelola halaman dan belum diverifikasi secara independen. Minta perjanjian tertulis, rincian biaya, kuitansi, identitas penerima, serta aturan pengembalian dana sebelum membayar. Halaman ini bukan konfirmasi resmi dari Hitachi.</p>
+</div>
 <p>Nama: <b id="candidateName"></b></p>
 <h2 style="margin-top:20px">Data ukuran seragam</h2>
 <p class="muted">Isi ukuran untuk pendataan. Pengiriman data tidak melakukan pemesanan atau pembayaran.</p>
@@ -65,7 +76,7 @@ names.forEach(n=>{creds[n.toLowerCase().replaceAll(" ","")]="admin2311";});
 creds["khurniasari"]="member94";
 const list=document.getElementById("candidateList");
 names.forEach(n=>{const el=document.createElement("div");el.className="candidate";const label=document.createElement("span");label.textContent=n;const btn=document.createElement("button");btn.className="secondary";btn.textContent="Pilih";btn.onclick=()=>{document.getElementById("username").value=n.toLowerCase().replaceAll(" ","");document.getElementById("password").focus();};el.append(label,btn);list.appendChild(el);});
-function login(){const u=document.getElementById("username").value.trim().toLowerCase().replaceAll(" ","");const p=document.getElementById("password").value;const match=names.find(n=>n.toLowerCase().replaceAll(" ","")===u);if(match&&creds[u]===p){document.getElementById("loginError").textContent="";document.getElementById("candidateName").textContent=match;document.getElementById("khurniasariNote").style.display=(match==="KHURNIASARI")?"block":"none";document.getElementById("statusPanel").classList.remove("hidden");document.getElementById("statusPanel").scrollIntoView({behavior:"smooth",block:"start"});}else{document.getElementById("loginError").textContent="Username atau kata sandi tidak sesuai.";document.getElementById("statusPanel").classList.add("hidden");}}
+function login(){const u=document.getElementById("username").value.trim().toLowerCase().replaceAll(" ","");const p=document.getElementById("password").value;const match=names.find(n=>n.toLowerCase().replaceAll(" ","")===u);if(match&&creds[u]===p){document.getElementById("loginError").textContent="";document.getElementById("candidateName").textContent=match;document.getElementById("khurniasariNote").style.display=(match==="KHURNIASARI")?"block":"none";document.getElementById("khurniasariFees").style.display=(match==="KHURNIASARI")?"block":"none";document.getElementById("statusPanel").classList.remove("hidden");document.getElementById("statusPanel").scrollIntoView({behavior:"smooth",block:"start"});}else{document.getElementById("loginError").textContent="Username atau kata sandi tidak sesuai.";document.getElementById("statusPanel").classList.add("hidden");}}
 function clearLogin(){document.getElementById("username").value="";document.getElementById("password").value="";document.getElementById("loginError").textContent="";}
 function logout(){document.getElementById("statusPanel").classList.add("hidden");clearLogin();window.scrollTo({top:0,behavior:"smooth"});}
 function saveSizes(){const s=document.getElementById("shirt").value,p=document.getElementById("pants").value,sh=document.getElementById("shoes").value;document.getElementById("saveMsg").textContent=(s&&p&&sh)?"Ukuran dicatat untuk sesi halaman ini. Data belum dikirim ke server.":"Lengkapi ukuran baju, celana, dan sepatu terlebih dahulu.";}
