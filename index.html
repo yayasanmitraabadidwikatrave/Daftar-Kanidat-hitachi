@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daftar Kanidat HITACHI — Yayasan MITRA ABADI DWIKA TRAVE</title>
+<style>
+:root{--navy:#10233f;--blue:#1f5eff;--ink:#182235;--muted:#667085;--line:#e4e9f1;--bg:#f4f7fb;--white:#fff;--green:#087f5b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+header{background:linear-gradient(120deg,#10233f,#1e477a);color:#fff;padding:28px 18px}
+.wrap{max-width:1040px;margin:auto}h1{margin:0;font-size:clamp(24px,4vw,34px);letter-spacing:-.5px}header p{margin:7px 0 0;color:#dbe7f7}
+main{max-width:1040px;margin:24px auto;padding:0 16px 40px}.notice{border:1px solid #f2d08b;background:#fff8e7;color:#704b00;border-radius:12px;padding:13px 15px;margin-bottom:18px;font-size:13px}
+.panel{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:0 5px 22px #152b4908;margin-bottom:18px}
+h2{font-size:19px;margin:0 0 14px}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+label{display:block;font-size:13px;font-weight:650;margin-bottom:6px}input,select{width:100%;padding:12px;border:1px solid #cfd7e4;border-radius:9px;font:inherit;background:#fff;color:var(--ink)}
+button{border:0;border-radius:9px;padding:11px 16px;background:var(--blue);color:#fff;font:inherit;font-weight:700;cursor:pointer}button:hover{filter:brightness(.94)}button.secondary{background:#edf2ff;color:#2349ad;border:1px solid #d9e2ff}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.error{color:#b42318;font-size:13px;margin-top:10px}.candidate-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.candidate{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--line);border-radius:10px;padding:12px;background:#fff}.candidate span{font-weight:650;font-size:13px}.candidate button{padding:7px 10px;font-size:12px;white-space:nowrap}
+.status{border-radius:12px;background:#eefaf5;border:1px solid #b7ead5;padding:16px;margin:14px 0}.status strong{color:var(--green)}
+.hidden{display:none!important}.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}.metric{background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:12px}.metric small{display:block;color:var(--muted)}.metric b{font-size:16px}
+footer{max-width:1040px;margin:auto;padding:0 16px 28px;color:var(--muted);font-size:12px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.candidate-list{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:17px}.summary{grid-template-columns:1fr}}
+@media(max-width:390px){.candidate-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Daftar Kanidat HITACHI</h1><p>Yayasan MITRA ABADI DWIKA TRAVE</p></div></header>
+<main>
+
+<section class="panel" id="loginPanel">
+<h2>Masuk ke status kandidat</h2>
+<p class="muted">Pilih nama dari daftar atau masukkan username dan kata sandi yang diberikan pengelola.</p>
+<div class="grid">
+<div><label for="username">Username</label><input id="username" autocomplete="username" placeholder="Username"></div>
+<div><label for="password">Kata sandi</label><input id="password" type="password" autocomplete="current-password" placeholder="Kata sandi"></div>
+</div>
+<div class="actions"><button onclick="login()">Lihat Status</button><button class="secondary" onclick="clearLogin()">Bersihkan</button></div>
+<div id="loginError" class="error" role="alert"></div>
+</section>
+<section class="panel">
+<h2>Daftar nama kandidat</h2>
+<p class="muted">Tekan tombol “Pilih” untuk mengisi username. Login tetap memerlukan kata sandi.</p>
+<div id="candidateList" class="candidate-list"></div>
+</section>
+<section class="panel hidden" id="statusPanel">
+<div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap"><h2 style="margin:0">Status Kandidat</h2><button class="secondary" onclick="logout()">Keluar</button></div>
+<div class="status"><strong>Dalam proses tes dan MCU.</strong><br>Silakan menunggu informasi resmi berikutnya. Status pada template ini belum merupakan konfirmasi kelulusan, hasil MCU, atau penawaran kerja.</div>
+<p>Nama: <b id="candidateName"></b></p>
+<h2 style="margin-top:20px">Data ukuran seragam</h2>
+<p class="muted">Isi ukuran untuk pendataan. Pengiriman data tidak melakukan pemesanan atau pembayaran.</p>
+<div class="grid">
+<div><label for="shirt">Ukuran baju</label><select id="shirt"><option value="">Pilih ukuran</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option><option>XXXL</option></select></div>
+<div><label for="pants">Ukuran celana</label><select id="pants"><option value="">Pilih ukuran</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option><option>32</option><option>33</option><option>34</option><option>35</option><option>36</option><option>38</option><option>40</option></select></div>
+<div><label for="shoes">Ukuran sepatu (EU)</label><select id="shoes"><option value="">Pilih ukuran</option><option>36</option><option>37</option><option>38</option><option>39</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option><option>45</option><option>46</option></select></div>
+</div>
+<div class="actions"><button onclick="saveSizes()">Simpan ukuran di halaman ini</button></div><div id="saveMsg" class="muted" aria-live="polite"></div>
+</section>
+<section class="panel">
+<h2>Informasi biaya dan fasilitas (perlu verifikasi tertulis)</h2>
+<div class="summary">
+<div class="metric"><small>Seragam</small><b>Rp375.000</b><div class="muted">Keterangan yang diajukan: 2 stel seragam + 3 topi</div></div>
+<div class="metric"><small>Mes selama 2 bulan</small><b>Rp350.000</b><div class="muted">Pastikan rincian periode dan fasilitas tertulis</div></div>
+<div class="metric"><small>ADM saat kontrak</small><b>Rp3.500.000</b><div class="muted">Jangan membayar sebelum legalitas dan dasar biaya diverifikasi</div></div>
+</div>
+
+</section>
+</main>
+
+<script>
+const names=["AKBAR MAULANA","BAGASKARA","BAGUS PRASETYO","CINTYANINGRUM","DEVA SEVA","DHELA","ELVIANA","ELVIRA","GHOVANI TEO","INDRI NINO","JESSICA CHRISTIAN","KHAMILA NISA","KHURNIASARI","LISNAWATI","MAUDIA","MUSTIKASARI"];
+const creds={};
+names.forEach(n=>{creds[n.toLowerCase().replaceAll(" ","")]="admin2311";});
+creds["khurniasari"]="member94";
+const list=document.getElementById("candidateList");
+names.forEach(n=>{const el=document.createElement("div");el.className="candidate";const label=document.createElement("span");label.textContent=n;const btn=document.createElement("button");btn.className="secondary";btn.textContent="Pilih";btn.onclick=()=>{document.getElementById("username").value=n.toLowerCase().replaceAll(" ","");document.getElementById("password").focus();};el.append(label,btn);list.appendChild(el);});
+function login(){const u=document.getElementById("username").value.trim().toLowerCase().replaceAll(" ","");const p=document.getElementById("password").value;const match=names.find(n=>n.toLowerCase().replaceAll(" ","")===u);if(match&&creds[u]===p){document.getElementById("loginError").textContent="";document.getElementById("candidateName").textContent=match;document.getElementById("statusPanel").classList.remove("hidden");document.getElementById("statusPanel").scrollIntoView({behavior:"smooth",block:"start"});}else{document.getElementById("loginError").textContent="Username atau kata sandi tidak sesuai.";document.getElementById("statusPanel").classList.add("hidden");}}
+function clearLogin(){document.getElementById("username").value="";document.getElementById("password").value="";document.getElementById("loginError").textContent="";}
+function logout(){document.getElementById("statusPanel").classList.add("hidden");clearLogin();window.scrollTo({top:0,behavior:"smooth"});}
+function saveSizes(){const s=document.getElementById("shirt").value,p=document.getElementById("pants").value,sh=document.getElementById("shoes").value;document.getElementById("saveMsg").textContent=(s&&p&&sh)?"Ukuran dicatat untuk sesi halaman ini. Data belum dikirim ke server.":"Lengkapi ukuran baju, celana, dan sepatu terlebih dahulu.";}
+</script>
+</body>
+</html>
